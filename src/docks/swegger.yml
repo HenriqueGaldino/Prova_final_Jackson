@@ -1,0 +1,344 @@
+openapi: 3.0.0
+info:
+  title: API Completa de Gerenciamento
+  description: API com autenticação JWT para usuários, login, produtos, categorias, pedidos e itens de pedidos.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3001
+    description: Servidor local
+
+tags:
+  - name: Usuários
+    description: Operações relacionadas a usuários
+  - name: Produtos
+    description: Operações relacionadas a produtos
+  - name: Categorias
+    description: Operações relacionadas a categorias
+  - name: Pedidos
+    description: Operações relacionadas a pedidos
+  - name: Itens de Pedido
+    description: Operações relacionadas a itens de pedidos
+
+paths:
+  /api/user:
+    get:
+      tags: [Usuários]
+      summary: Listar usuários
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Lista de usuários
+    post:
+      tags: [Usuários]
+      summary: Criar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuario"
+      responses:
+        "201":
+          description: Usuário criado
+  /api/user/{id}:
+    put:
+      tags: [Usuários]
+      summary: Atualizar usuário
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Usuario" }
+      responses:
+        "200":
+          description: Usuário atualizado
+    delete:
+      tags: [Usuários]
+      summary: Deletar usuário
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Usuário deletado
+  /api/user/login:
+    post:
+      tags: [Login]
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                senha:
+                  type: string
+      responses:
+        "200":
+          description: Token JWT
+
+  /produtos:
+    get:
+      tags: [Produtos]
+      summary: Listar produtos
+      responses:
+        "200":
+          description: Lista de produtos
+    post:
+      tags: [Produtos]
+      summary: Criar produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Produto" }
+      responses:
+        "201":
+          description: Produto criado
+  /produtos/{id}:
+    put:
+      tags: [Produtos]
+      summary: Atualizar produto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Produto" }
+      responses:
+        "200":
+          description: Produto atualizado
+    delete:
+      tags: [Produtos]
+      summary: Deletar produto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Produto deletado
+
+  /categorias:
+    get:
+      tags: [Categorias]
+      summary: Listar categorias
+      responses:
+        "200":
+          description: Lista de categorias
+    post:
+      tags: [Categorias]
+      summary: Criar categoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Categoria" }
+      responses:
+        "201":
+          description: Categoria criada
+  /categorias/{id}:
+    put:
+      tags: [Categorias]
+      summary: Atualizar categoria
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Categoria" }
+      responses:
+        "200":
+          description: Categoria atualizada
+    delete:
+      tags: [Categorias]
+      summary: Deletar categoria
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Categoria deletada
+
+  /pedidos:
+    get:
+      tags: [Pedidos]
+      summary: Listar pedidos
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Lista de pedidos
+    post:
+      tags: [Pedidos]
+      summary: Criar pedido
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Pedido" }
+      responses:
+        "201":
+          description: Pedido criado
+  /pedidos/{id}:
+    put:
+      tags: [Pedidos]
+      summary: Atualizar pedido
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Pedido" }
+      responses:
+        "200":
+          description: Pedido atualizado
+    delete:
+      tags: [Pedidos]
+      summary: Deletar pedido
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Pedido deletado
+
+  /orderprodutos:
+    get:
+      tags: [Itens de Pedido]
+      summary: Listar itens de pedidos
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Lista de itens de pedidos
+    post:
+      tags: [Itens de Pedido]
+      summary: Adicionar item a pedido
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OrderProduto" }
+      responses:
+        "201":
+          description: Item adicionado
+  /orderprodutos/{id}:
+    put:
+      tags: [Itens de Pedido]
+      summary: Atualizar item de pedido
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/OrderProduto" }
+      responses:
+        "200":
+          description: Item atualizado
+    delete:
+      tags: [Itens de Pedido]
+      summary: Deletar item de pedido
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Item deletado
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        email:
+          type: string
+        senha:
+          type: string
+
+    Produto:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        preco:
+          type: number
+    Categoria:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+    Pedido:
+      type: object
+      properties:
+        id:
+          type: integer
+        usuarioId:
+          type: integer
+        data:
+          type: string
+          format: date
+    OrderProduto:
+      type: object
+      properties:
+        id:
+          type: integer
+        pedidoId:
+          type: integer
+        produtoId:
+          type: integer
+        quantidade:
+          type: integer
+security: []
