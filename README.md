@@ -135,3 +135,4 @@ A documentação pode ser criada com `swagger-jsdoc` e `swagger-ui-express` ou, 
 * npm install cors 
 * npm install mysql2 
 * npm install mongoose
+* npm install swagger-ui-express yamljs
