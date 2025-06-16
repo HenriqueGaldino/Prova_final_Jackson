@@ -123,7 +123,7 @@ A documentação pode ser criada com `swagger-jsdoc` e `swagger-ui-express` ou, 
 * O acesso a dados sensíveis está protegido por middlewares.
 * Estruture corretamente as rotas (`/api/`) e também os retornos e status.
 
-#Instalações necessárias:
+# Instalações necessárias:
 
 * npm install express 
 * npm install sequelize 
